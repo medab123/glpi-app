@@ -26,7 +26,7 @@ function App() {
   const [chartlebelsTicketByEntiter, setChartlebelsTicketByEntiter] = useState([])
   const [chartDataTicketByTechnicien, setChartDataTicketByTechnicien] = useState([])
   const [chartlebelsTicketByTechnicien, setChartlebelsTicketByTechnicien] = useState([])
-  const apiServer = "http://10.60.0.116/api/public/";
+  const apiServer = "http://10.60.0.116/api/public";
 
   const ticketByTechnicien = async (d1, d2) => {
     await axios.get(apiServer+`/ticketByTechnicien/` + d1 + '/' + d2)
