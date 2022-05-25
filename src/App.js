@@ -29,7 +29,7 @@ function App() {
   const [isChecked, setIsChecked] = useState(true)
   const [timeInterval, setTimeInterval] = useState(2000)
 
-  const apiServer = "http://10.60.0.116/api/public";
+  const apiServer = "http://lacq.elephant-vert.com:666/api/public";
 
   const ticketByTechnicien = async (d1, d2) => {
     await axios.get(apiServer + `/ticketByTechnicien/` + d1 + '/' + d2)
@@ -74,6 +74,28 @@ function App() {
     setDate1(document.getElementById('date1').value);
     setDate2(document.getElementById('date2').value);
   }
+  const [totalTickets, setTotalTickets] = useState(0);
+  const [totalSatisfaction, setTotalSatisfaction] = useState(0);
+  const getTotalTickets = () => {
+    let sum = 0
+    chartDataTicketByTechnicien.map(data => {
+      sum += data;
+    }); 
+    setTotalTickets(sum)
+  }
+  const getTotalSatisfaction = () => {
+    let sum = 0.0
+    let count = chartDataSatisfactionByEntiter.length
+    chartDataSatisfactionByEntiter.map(data => {
+      sum += parseFloat(data);
+    }); 
+    setTotalSatisfaction((sum*100/(count*5)).toFixed(2))
+  }
+
+  useEffect(()=>{
+    getTotalTickets()
+    getTotalSatisfaction()
+  })
   useEffect(() => {
     if (timeInterval < 500) return
     if (isChecked) {
@@ -81,20 +103,20 @@ function App() {
       let day = String(newDate.getDate());
       let month = newDate.getMonth() + 1;
       let year = String(newDate.getFullYear());
-      let date1 = year+'-0'+month+'-'+day
-      let date2 = year+'-0'+String(month-1)+'-01'
+      let date1 = year + '-0' + month + '-' + day
+      let date2 = year + '-0' + String(month - 1) + '-01'
       setDate2(date1)
       setDate1(date2)
       console.log(date2);
     }
     const timer = setInterval(() => {
       console.log("reloading")
+      
       ticketByTechnicien(date1, date2)
       ticketByEntiter(date1, date2)
       satisfactionByEntiter(date1, date2)
       satisfactionByTechnicien(date1, date2)
       ticketResoluByEntiter(date1, date2)
-      console.log(timeInterval)
     }, timeInterval);
     return () => {
       clearInterval(timer);
@@ -109,8 +131,8 @@ function App() {
 
   return (
 
-    <div className="App">
-      <div className='row py-3' style={{ backgroundColor: 'black', color: '#fff' }} >
+    <div className="App" style={{ overflowX:"hidden"}}>
+      <div className='row py-2' style={{ backgroundColor: 'black', color: '#fff' }} >
         <div className='col-xm-12 col-md-6 '>
           <input type={'checkbox'} value="yes" checked={isChecked} onChange={handleOnChange} />
           <label className='mx-2' >Auto Refresh</label>
@@ -118,25 +140,67 @@ function App() {
           <input className={'mx-2 ' + (isChecked ? 'd-none' : '')} type={'date'} value={date1} placeholder="yyyy-mm-dd" id='date1' onChange={refresh} />
           <input className={(isChecked ? 'd-none' : '')} type={'date'} value={date2} placeholder="yyyy-mm-dd" id='date2' onChange={refresh} />
         </div>
-        <div className={'col-xm-12 col-md-6 '+ (isChecked ? '' : 'd-none')}>
-          <h3>{String(new Date())}</h3>
+        <div className={'col-xm-12 col-md-6 ' + (isChecked ? '' : 'd-none')}>
+          <h4>{String(new Date())}</h4>
         </div>
       </div>
-      <div className='row'>
-        <div className='col-xm-12 col-md-6 col-lg-4'>
-          <SatisfactionByTechnicien chartLebels={chartlebelsSatisfactionByTechnicien} chartData={chartDataSatisfactionByTechnicien} />
+      <div className='mx-2 my-2' style={{ backgroundColor: '#cbced4', borderRadius: '20px', color: 'black' }}>
+        <div className='row justify-content-md-center'>
+          <div className='col-xm-6 col-md-3 d-iniline ' >
+            <div className='m-2 px-4 py-1' style={{ backgroundColor: '#fff', color:'rgba(255, 99, 132, 1)', borderRadius: '20px', height: '80px', textAlign: 'left' }}>
+              <h5 className='m-0'>TOTAL TICKET</h5>
+              <b style={{ display: 'flex', justifyContent: 'center' }}>{totalTickets} Teckets</b>
+            </div>
+          </div>
+          <div className='col-xm-6 col-md-3 d-iniline' >
+            <div className='m-2 px-4 py-1' style={{ backgroundColor: '#fff',color:'rgba(54, 162, 235, 1)', borderRadius: '20px', height: '80px', textAlign: 'left' }}>
+              <h5 className='m-0'>TOTAL SATISFACTION %</h5>
+              <b style={{ display: 'flex', justifyContent: 'center' }}>{totalSatisfaction}%</b>
+            </div>
+          </div>
+          <div className='col-xm-6 col-md-3 d-iniline' >
+            <div className='m-2 px-4 py-1' style={{ backgroundColor: '#fff',color:'rgba(153, 102, 255, 1)', borderRadius: '20px', height: '80px', textAlign: 'left' }}>
+              <h5 className='m-0'>TEMP DE REPONCE</h5>
+              <b style={{ display: 'flex', justifyContent: 'center' }}>50 min</b>
+            </div>
+          </div>
+
         </div>
-        <div className='col-xm-12 col-md-6 col-lg-4'>
-          <SatisfactionByEntiter chartLebels={chartlebelsSatisfactionByEntiter} chartData={chartDataSatisfactionByEntiter} />
+      </div>
+      <div className='m-2' style={{ backgroundColor: '#cbced4', borderRadius: '20px' }}>
+        <div className='d-inline-block' style={{ width: '64%' }}>
+          <div className='row mt-3 p-1' >
+            <div className='col-xm-12 col-md-6 ' >
+              <div className='m-1 mb-3' style={{ backgroundColor: '#fff', borderRadius: '20px' }}>
+                <SatisfactionByTechnicien chartLebels={chartlebelsSatisfactionByTechnicien} chartData={chartDataSatisfactionByTechnicien} />
+              </div>
+            </div>
+            <div className='col-xm-12 col-md-6 ' >
+              <div className='m-1 mb-3' style={{ backgroundColor: '#fff', borderRadius: '20px' }}>
+                <SatisfactionByEntiter chartLebels={chartlebelsSatisfactionByEntiter} chartData={chartDataSatisfactionByEntiter} />
+              </div>
+            </div>
+
+            <div className='col-xm-12 col-md-6 ' >
+              <div className='m-1 mb-3' style={{ backgroundColor: '#fff', borderRadius: '20px' }}>
+                <TicketByTechnicien chartLebels={chartlebelsTicketByTechnicien} chartData={chartDataTicketByTechnicien} />
+              </div>
+            </div>
+            <div className='col-xm-12 col-md-6 c' >
+              <div className='m-1 mb-3' style={{ backgroundColor: '#fff', borderRadius: '20px' }}>
+                <TicketResoluByEntiter chartLebels={chartlebelsTicketResoluByEntiter} chartData={chartDataTicketResoluByEntiter} />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className='col-xm-12 col-md-6 col-lg-4'>
-          <TicketResoluByEntiter chartLebels={chartlebelsTicketResoluByEntiter} chartData={chartDataTicketResoluByEntiter} />
-        </div>
-        <div className='col-xm-12 col-md-6 col-lg-4'>
-          <TicketByTechnicien chartLebels={chartlebelsTicketByTechnicien} chartData={chartDataTicketByTechnicien} />
-        </div>
-        <div className='col-xm-12 col-md-6 col-lg-4'>
-          <TicketByEntiter chartLebels={chartlebelsTicketByEntiter} chartData={chartDataTicketByEntiter} />
+        <div className='d-inline-block' style={{ width: '35%' }}>
+          <div className='row' >
+            <div className='col-xm-12 '>
+              <div className='m-1 mb-3' style={{ backgroundColor: '#fff', borderRadius: '20px' }}>
+                <TicketByEntiter chartLebels={chartlebelsTicketByEntiter} chartData={chartDataTicketByEntiter} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
