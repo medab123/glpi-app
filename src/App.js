@@ -26,6 +26,9 @@ function App() {
   const [chartlebelsTicketByEntiter, setChartlebelsTicketByEntiter] = useState([])
   const [chartDataTicketByTechnicien, setChartDataTicketByTechnicien] = useState([])
   const [chartlebelsTicketByTechnicien, setChartlebelsTicketByTechnicien] = useState([])
+  const [isChecked, setIsChecked] = useState(true)
+  const [timeInterval, setTimeInterval] = useState(2000)
+
   const apiServer = "http://10.60.0.116/api/public";
 
   const ticketByTechnicien = async (d1, d2) => {
@@ -72,37 +75,52 @@ function App() {
     setDate2(document.getElementById('date2').value);
   }
   useEffect(() => {
+    if (timeInterval < 500) return
+    if (isChecked) {
+      let newDate = new Date()
+      let day = String(newDate.getDate());
+      let month = newDate.getMonth() + 1;
+      let year = String(newDate.getFullYear());
+      let date1 = year+'-0'+month+'-'+day
+      let date2 = year+'-0'+String(month-1)+'-01'
+      setDate2(date1)
+      setDate1(date2)
+      console.log(date2);
+    }
     const timer = setInterval(() => {
-      console.log(document.getElementById('auto').checked)
+      console.log("reloading")
       ticketByTechnicien(date1, date2)
       ticketByEntiter(date1, date2)
       satisfactionByEntiter(date1, date2)
       satisfactionByTechnicien(date1, date2)
       ticketResoluByEntiter(date1, date2)
-      console.log("test")
-    }, 1000);
+      console.log(timeInterval)
+    }, timeInterval);
     return () => {
       clearInterval(timer);
     };
 
-  }, [date1, date2])
+  }, [date1, date2, timeInterval, isChecked])
 
-  
+  const handleOnChange = () => {
+    setIsChecked(!isChecked);
+    console.log(isChecked)
+  };
+
   return (
-    
+
     <div className="App">
       <div className='row py-3' style={{ backgroundColor: 'black', color: '#fff' }} >
-        <div className='col-xm-12 col-md-4 '>
-          <input type={'checkbox'} onChange={refresh} id="auto"  value="yes" />
+        <div className='col-xm-12 col-md-6 '>
+          <input type={'checkbox'} value="yes" checked={isChecked} onChange={handleOnChange} />
           <label className='mx-2' >Auto Refresh</label>
-          <input className={''} type={'number'} onChange={refresh} id="auto" />
+          <input className={'mx-2 ' + (isChecked ? '' : 'd-none')} type={'number'} value={timeInterval} min="500" max="20000" onChange={(e) => setTimeInterval(e.target.value)} id="auto" />
+          <input className={'mx-2 ' + (isChecked ? 'd-none' : '')} type={'date'} value={date1} placeholder="yyyy-mm-dd" id='date1' onChange={refresh} />
+          <input className={(isChecked ? 'd-none' : '')} type={'date'} value={date2} placeholder="yyyy-mm-dd" id='date2' onChange={refresh} />
         </div>
-        <div className='col-xm-12 col-md-2'></div>
-        <div className={'col-xm-12 col-md-3 '}>
-          <input className='mx-2' type={'date'} value={date1} placeholder="yyyy-mm-dd" id='date1' onChange={refresh} />
-          <input type={'date'} value={date2} placeholder="yyyy-mm-dd" id='date2' onChange={refresh} />
+        <div className={'col-xm-12 col-md-6 '+ (isChecked ? '' : 'd-none')}>
+          <h3>{String(new Date())}</h3>
         </div>
-        <div className='col-xm-12 col-md-3'></div>
       </div>
       <div className='row'>
         <div className='col-xm-12 col-md-6 col-lg-4'>
