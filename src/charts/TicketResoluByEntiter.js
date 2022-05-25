@@ -10,6 +10,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import axios from 'axios';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(
     CategoryScale,
@@ -68,11 +69,23 @@ function TicketResoluByEntiter(props) {
             },
         ],
     }
-    
+    var options = {
+        tooltips: {
+            enabled: false
+        },
+        plugins: {
+            datalabels: {
+                formatter: (value, ctx) => {
+                    return value;
+                },
+                color: 'black',
+            }
+        }
+    };
     return (
         <div>
             <h1>Ticket Resolu par Entites</h1>
-            <Bar data={data} />
+            <Bar options={options} plugins={[ChartDataLabels]} data={data} />
         </div>
     )
 }

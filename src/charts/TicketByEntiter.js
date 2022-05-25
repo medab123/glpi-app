@@ -33,6 +33,7 @@ function TicketByEntiter(props) {
                     'rgba(75, 192, 192, 1)',
                     'rgba(153, 102, 255, 1)',
                     'rgba(255, 159, 64, 1)',
+                    'rgba(255, 206, 86, 1)',
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
@@ -41,18 +42,35 @@ function TicketByEntiter(props) {
                     'rgba(75, 192, 192, 1)',
                     'rgba(153, 102, 255, 1)',
                     'rgba(255, 159, 64, 1)',
+                    'rgba(255, 206, 86, 1)',
                 ],
                 borderWidth: 1,
             },
         ],
     }
-    const options = {
-        
-      };
+    var options = {
+        tooltips: {
+            enabled: false
+        },
+        plugins: {
+            datalabels: {
+                formatter: (value, ctx) => {
+                    let sum = 0;
+                    let dataArr = ctx.chart.data.datasets[0].data;
+                    dataArr.map(data => {
+                        sum += data;
+                    });
+                    let percentage = (value*100 / sum).toFixed(2)+"%";
+                    return percentage;
+                },
+                color: '#fff',
+            }
+        }
+    };
     return (
         <div>
             <h1>Ticket par Entites</h1>
-            <Doughnut  data={data} />
+            <Doughnut options={options} plugins={[ChartDataLabels]}   data={data} />
         </div>
     )
 }

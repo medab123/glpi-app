@@ -10,6 +10,8 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import axios from 'axios';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
 
 ChartJS.register(
     CategoryScale,
@@ -60,14 +62,24 @@ function TicketByTechnicien(props) {
         ],
     }
 
-    const options = {
-        indexAxis: 'y',
-        
-    }
+
+    var options = {
+        tooltips: {
+            enabled: false
+        },
+        plugins: {
+            datalabels: {
+                formatter: (value, ctx) => {
+                    return value;
+                },
+                color: 'black',
+            }
+        }
+    };
     return (
         <div>
             <h1>Ticket par Technicien</h1>
-            <Bar options={options} data={data}  />
+            <Bar options={options} plugins={[ChartDataLabels]} data={data}  />
         </div>
     )
 }

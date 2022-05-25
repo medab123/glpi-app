@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import {
+import ChartDataLabels from 'chartjs-plugin-datalabels';import {
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
@@ -58,10 +58,25 @@ function SatisfactionByEntiter(props) {
             },
         ],
     }
+    var options = {
+        tooltips: {
+            enabled: false
+        },
+        plugins: {
+            datalabels: {
+                formatter: (value, ctx) => {
+                    let percentage = (value*100 / 5).toFixed(2)+"%";
+                    return percentage;
+                },
+                
+                color: 'black',
+            }
+        }
+    };
     return (
         <div>
             <h1>Satisfaction par Entites</h1>
-            <Bar data={data} />
+            <Bar  data={data} plugins={[ChartDataLabels]} options={options} />
         </div>
     )
 }
