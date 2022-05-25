@@ -64,6 +64,7 @@ function TicketByTechnicien(props) {
 
 
     var options = {
+        indexAxis: 'y',
         tooltips: {
             enabled: false
         },
