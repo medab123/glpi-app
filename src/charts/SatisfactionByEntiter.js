@@ -60,7 +60,7 @@ function SatisfactionByEntiter(props) {
     }
     return (
         <div>
-            <h1>Satisfaction By Entiter</h1>
+            <h1>Satisfaction par Entites</h1>
             <Bar data={data} />
         </div>
     )

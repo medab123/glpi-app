@@ -51,7 +51,7 @@ function TicketByEntiter(props) {
       };
     return (
         <div>
-            <h1>Ticket By Entiter</h1>
+            <h1>Ticket par Entites</h1>
             <Doughnut  data={data} />
         </div>
     )

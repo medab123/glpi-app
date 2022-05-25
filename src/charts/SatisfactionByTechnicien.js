@@ -60,7 +60,7 @@ function SatisfactionByTechnicien(props) {
     }
     return (
         <div>
-            <h1>Satisfaction By Technicien</h1>
+            <h1>Satisfaction par Technicien</h1>
             <Bar data={data} />
         </div>
     )

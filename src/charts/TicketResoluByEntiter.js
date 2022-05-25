@@ -71,7 +71,7 @@ function TicketResoluByEntiter(props) {
     
     return (
         <div>
-            <h1>Ticket Resolu By Entiter</h1>
+            <h1>Ticket Resolu par Entites</h1>
             <Bar data={data} />
         </div>
     )

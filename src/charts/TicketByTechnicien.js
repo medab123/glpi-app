@@ -31,14 +31,13 @@ function TicketByTechnicien(props) {
         
         setChartData(props.chartData)
         setChartlebels(props.chartLebels)
-        console.log(chartData)
         
     })
     const data = {
         labels: chartlebels,
         datasets: [
             {
-                label: 'teckets',
+                label: 'tickets',
                 data: chartData,
                 backgroundColor: [
                     'rgba(255, 99, 132, 1)',
@@ -67,7 +66,7 @@ function TicketByTechnicien(props) {
     }
     return (
         <div>
-            <h1>Ticket By Technicien</h1>
+            <h1>Ticket par Technicien</h1>
             <Bar options={options} data={data}  />
         </div>
     )
