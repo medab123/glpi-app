@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+.donat-chart{
+  
+  width: 35% !important
+}
+.bar-charts{
+  width: 64%
+}
+@media only screen and (max-width: 765px) {
+  .donat-chart{
+    width: 100% !important
+  }
+  .bar-charts{
+    width: 100% !important
+  }
+}

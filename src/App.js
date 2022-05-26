@@ -5,12 +5,9 @@ import TicketByTechnicien from './charts/TicketByTechnicien';
 import SatisfactionByTechnicien from './charts/SatisfactionByTechnicien';
 import SatisfactionByEntiter from './charts/SatisfactionByEntiter';
 import TicketResoluByEntiter from './charts/TicketResoluByEntiter'
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { useState, useEffect } from 'react';
-import ab from './API/abcd';
 import axios from 'axios';
 
 
@@ -29,7 +26,7 @@ function App() {
   const [isChecked, setIsChecked] = useState(true)
   const [timeInterval, setTimeInterval] = useState(2000)
 
-  const apiServer = "http://lacq.elephant-vert.com:666/api/public";
+  const apiServer = "http://10.60.0.116/api/public";
 
   const ticketByTechnicien = async (d1, d2) => {
     await axios.get(apiServer + `/ticketByTechnicien/` + d1 + '/' + d2)
@@ -168,7 +165,7 @@ function App() {
         </div>
       </div>
       <div className='m-2' style={{ backgroundColor: '#cbced4', borderRadius: '20px' }}>
-        <div className='d-inline-block' style={{ width: '64%' }}>
+        <div className='d-inline-block bar-charts' style={{  }}>
           <div className='row mt-3 p-1' >
             <div className='col-xm-12 col-md-6 ' >
               <div className='m-1 mb-3' style={{ backgroundColor: '#fff', borderRadius: '20px' }}>
@@ -193,7 +190,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className='d-inline-block' style={{ width: '35%' }}>
+        <div className='d-md-inline-block donat-chart'>
           <div className='row' >
             <div className='col-xm-12 '>
               <div className='m-1 mb-3' style={{ backgroundColor: '#fff', borderRadius: '20px' }}>
