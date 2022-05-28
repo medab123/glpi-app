@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\apiController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,13 @@ use App\Http\Controllers\apiController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware' => ['cors']], function () {
-    Route::get('/ticketParEntiter/{date1}/{date2}', [apiController::class,'ticketParEntiter']);
-    Route::get('/ticketResoluByEntiter/{date1}/{date2}', [apiController::class,'TicketResoluByEntiter']);
-    Route::get('/satisfactionByEntiter/{date1}/{date2}', [apiController::class,'satisfactionByEntiter']);
-    Route::get('/satisfactionByTechnicien/{date1}/{date2}', [apiController::class,'satisfactionByTechnicien']);
-    Route::get('/ticketByTechnicien/{date1}/{date2}', [apiController::class,'ticketByTechnicien']);
+
+
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/ticketParEntiter/', [apiController::class,'ticketParEntiter']);
+    Route::post('/ticketResoluByEntiter/', [apiController::class,'TicketResoluByEntiter']);
+    Route::post('/satisfactionByEntiter/', [apiController::class,'satisfactionByEntiter']);
+    Route::post('/satisfactionByTechnicien/', [apiController::class,'satisfactionByTechnicien']);
+    Route::post('/ticketByTechnicien/', [apiController::class,'ticketByTechnicien']);
 });
