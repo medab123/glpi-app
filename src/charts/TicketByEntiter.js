@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut, Line } from 'react-chartjs-2';
+import { Doughnut, Pie } from 'react-chartjs-2';
 import axios from 'axios';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -64,13 +64,15 @@ function TicketByEntiter(props) {
                     return percentage;
                 },
                 color: 'black',
+                anchor:'',
+               
             }
         }
     };
     return (
         <div>
             <h1>Ticket par Entites</h1>
-            <Doughnut options={options} plugins={[ChartDataLabels]}   data={data} />
+            <Pie options={options} plugins={[ChartDataLabels]}   data={data} />
         </div>
     )
 }
