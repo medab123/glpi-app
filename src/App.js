@@ -24,7 +24,7 @@ function App() {
   const [chartDataTicketByTechnicien, setChartDataTicketByTechnicien] = useState([])
   const [chartlebelsTicketByTechnicien, setChartlebelsTicketByTechnicien] = useState([])
   const [isChecked, setIsChecked] = useState(true)
-  const [timeInterval, setTimeInterval] = useState(2000)
+  const [timeInterval, setTimeInterval] = useState(5000)
 
   //const apiServer = "http://10.60.0.116/api/public";
   const apiServer = "http://lacq.elephant-vert.com:666/api/public/api";
@@ -35,21 +35,21 @@ function App() {
   
 
   const ticketByTechnicien = async (d1, d2) => {
-    await axios.post(apiServer + `/ticketByTechnicien/`,{date1:d1,date2:d2})
+    await axios.post(apiServer + `/ticketByTechnicien`,{date1:d1,date2:d2})
       .then(res => {
         setChartlebelsTicketByTechnicien(res.data.map(res => res.technicien));
         setChartDataTicketByTechnicien(res.data.map(res => res.valeu));
       })
   }
   const ticketByEntiter = async (d1, d2) => {
-    await axios.post(apiServer + `/ticketParEntiter/` ,{date1:d1,date2:d2})
+    await axios.post(apiServer + `/ticketParEntiter` ,{date1:d1,date2:d2})
       .then(res => {
         setChartlebelsTicketByEntiter(res.data.map(res => res.entities));
         setChartDataTicketByEntiter(res.data.map(res => res.valeu));
       })
   }
   const ticketResoluByEntiter = async (d1, d2) => {
-    await axios.post(apiServer + `/ticketResoluByEntiter/`  ,{date1:d1,date2:d2})
+    await axios.post(apiServer + `/ticketResoluByEntiter`  ,{date1:d1,date2:d2})
       .then(res => {
         setChartlebelsTicketResoluByEntiter(res.data.map(res => res.name));
         setChartDataTicketResoluByEntiter(res.data.map(res => res.nombreTickts));
@@ -57,14 +57,14 @@ function App() {
   }
 
   const satisfactionByTechnicien = async (d1, d2) => {
-    await axios.post(apiServer + `/satisfactionByTechnicien/`  ,{date1:d1,date2:d2})
+    await axios.post(apiServer + `/satisfactionByTechnicien`  ,{date1:d1,date2:d2})
       .then(res => {
         setChartlebelsSatisfactionByTechnicien(res.data.map(res => res.realname));
         setChartDataSatisfactionByTechnicien(res.data.map(res => res.moyenne));
       })
   }
   const satisfactionByEntiter = async (d1, d2) => {
-    await axios.post(apiServer + `/satisfactionByEntiter/`  ,{date1:d1,date2:d2})
+    await axios.post(apiServer + `/satisfactionByEntiter`  ,{date1:d1,date2:d2})
       .then(res => {
         setChartlebelsSatisfactionByEntiter(res.data.map(res => res.name));
         setChartDataSatisfactionByEntiter(res.data.map(res => res.moyenne));
