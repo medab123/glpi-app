@@ -1,5 +1,5 @@
 ## wep application for statistique and dashbords GLPI
 
-## -language 
+## -languages
   - React 
   - laravel 
